@@ -9,6 +9,6 @@ const PORT = process.env.PORT || 5000;
 app.use('/graphql', graphqlHTTP({
     //this will require a schema
     schema: schema, //or schema only we will write thats fine
-    graphiql:process.env.NODE_ENV === true//for dev mode testing
+    graphiql:process.env.NODE_ENV === 'development'//for dev mode testing
 }))
 app.listen(PORT, () => console.log(`Server Started at port ${PORT}`));
