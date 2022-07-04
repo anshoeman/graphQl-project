@@ -6,6 +6,12 @@ const {
   GraphQLSchema,
   GraphQLList,
 } = require("graphql");
+/*
+mongoose models
+*/
+
+const Project = require("../models/project");
+const Client = require("../models/client");
 
 /*
 Project Type
@@ -28,9 +34,7 @@ const projecType = new GraphQLObjectType({
     client: {
       type: clientType,
       resolve(parent, args) {
-        return clients.find(
-          (client) => client.id == parent.id
-        ); /*parent here is project parent=project*/
+        return Client.findById(parent.clientId)/*parent here is project parent=project*/
       },
     },
   }),
@@ -63,7 +67,9 @@ const RootQuery = new GraphQLObjectType({
     projects: {
       type: new GraphQLList(projecType),
       resolve(parent, args) {
-        return projects;
+        /*return projects*/ /*this was a fake project data that was given*/
+        /*we will try to send the data or return the data from database*/
+        return Project.find(); //return all the models in the database
       },
     },
     project: {
@@ -74,13 +80,14 @@ const RootQuery = new GraphQLObjectType({
         },
       },
       resolve(args, parent) {
-        return projects.find((project) => project.id == args.id);
+        // return projects.find((project) => project.id == args.id);
+        return Project.findById(args.id);
       },
     },
     clients: {
       type: new GraphQLList(clientType),
       resolve(parent, args) {
-        return clients;
+        return Client.find();/*Send the client data*/
       },
     },
     client: {
@@ -92,7 +99,7 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parent, args) {
         /*Here we will put mongoose functions to get a single client*/
-        return clients.find((client) => client.id == args.id);
+        return Client.findById(args.id);
       },
     },
   },
