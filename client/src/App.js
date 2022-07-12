@@ -1,6 +1,6 @@
 import React from "react";
-import ResponsiveAppBar from "./components/Header";
 import Clients from "./components/graphql/Clients";
+import Header from "./assets/Header";
 /*setting up apollo client*/
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 const client = new ApolloClient({
@@ -10,8 +10,8 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ResponsiveAppBar />
-      <Clients/>
+      <Header/>
+      <Clients />
     </ApolloProvider>
   );
 }
